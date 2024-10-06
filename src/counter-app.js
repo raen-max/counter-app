@@ -3,7 +3,8 @@ import { LitElement, html, css } from "lit";
 class CounterApp extends LitElement {
     static get properties() {
         return {
-            count: { type: Number }
+            count: { type: Number },
+            configured: {type: Number}
         };
     }
 
