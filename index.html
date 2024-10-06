@@ -10,9 +10,18 @@
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
       padding: 20px;
-    }
-    h1 {
       text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    #demo {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
     }
   </style>
   <script type="module" src="./src/counter-app.js"></script>
@@ -22,10 +31,7 @@
   <h1>Counter App Demo</h1>
   
   <div id="demo">
-    <h2>Default Counter</h2>
     <counter-app></counter-app>
-
-    <h2>Configured Counter</h2>
     <counter-app counter="16" min="10" max="25"></counter-app>
   </div>
 </body>
