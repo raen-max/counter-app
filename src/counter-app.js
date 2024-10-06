@@ -29,7 +29,9 @@ class CounterApp extends LitElement {
     render() {
         return html`
             <div>
-                Current count: ${this.count}
+                <div>
+                ${this.count}
+                </div>
                 <button @click=${this.increment}>+</button>
                 <button @click=${this.decrement}>-</button>
             </div>
