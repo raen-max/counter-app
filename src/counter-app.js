@@ -51,11 +51,12 @@ class CounterApp extends LitElement {
             <div>
                 <div>
                     Current count: ${this.count}
-                </div>
+                
                 ${this.showConfigured ? html`<div>Configured value: ${this.configured}</div>` : ''}
-                </div>
+
                 <button @click=${this.increment}>+</button>
                 <button @click=${this.decrement}>-</button>
+                </div>
             </div>
         `;
     }
