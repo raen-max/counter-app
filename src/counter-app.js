@@ -32,18 +32,45 @@ class CounterApp extends LitElement {
 
     static get styles() {
         return css`
+            :host {
+                display: block;
+                max-width: 300px;
+                margin: 20px auto;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                background-color: #ffffff;
+            }
             div {
                 text-align: center;
-                margin: 20px;
-                border: 1px solid #ccc;
-                padding: 10px;
-                border-radius: 5px;
-                background-color: #f9f9f9;
+                padding: 20px;
+            }
+            h2 {
+                margin: 0 0 15px;
+                font-size: 24px;
+                color: #333;
             }
             button {
                 margin: 5px;
-                padding: 10px;
-                font-size: 16px;
+                padding: 10px 15px;
+                font-size: 18px;
+                border: none;
+                border-radius: 5px;
+                background-color: #007bff;
+                color: white;
+                cursor: pointer;
+                transition: background-color 0.3s, transform 0.2s;
+            }
+            button:disabled {
+                background-color: #ccc;
+                cursor: not-allowed;
+            }
+            button:hover:not(:disabled) {
+                background-color: #0056b3;
+                transform: translateY(-2px);
+            }
+            button:active:not(:disabled) {
+                transform: translateY(1px);
             }
         `;
     }
@@ -51,7 +78,7 @@ class CounterApp extends LitElement {
     render() {
         return html`
             <div>
-                <div>Current count: ${this.count}</div>
+                <h2>Current Count: ${this.count}</h2>
                 <button @click=${this.increment} ?disabled="${this.count >= this.max}">+</button>
                 <button @click=${this.decrement} ?disabled="${this.count <= this.min}">-</button>
             </div>
