@@ -44,6 +44,16 @@ class CounterApp extends LitElement {
             }
         `;
     }
+    attributeChangedCallback(name, oldValue, newValue) {
+        super.attributeChangedCallback(name, oldValue, newValue);
+        if (name === 'counter') {
+            this.count = Number(newValue);
+        } else if (name === 'min') {
+            this.min = Number(newValue);
+        } else if (name === 'max') {
+            this.max = Number(newValue);
+        }
+    }
 
     render() {
         return html`
@@ -57,12 +67,14 @@ class CounterApp extends LitElement {
     }
 
     increment() {
-        this.count += 1; 
+        if (this.count < this.max) {
+            this.count += 1; // Increment count, respecting the max limit
+        }
     }
 
     decrement() {
-        if (this.count > 0) {
-            this.count -= 1;
+        if (this.count > this.min) {
+            this.count -= 1; // Decrement count, respecting the min limit
         }
     }
 }
