@@ -1,37 +1,50 @@
-import { LitElement, html } from "lit";
+import { LitElement, html, css } from "lit";
 
-class HandleEvents extends LitElement {
-  static get properties() {
-    return {
-      count: { type: Number }
-    };
-  }
+class CounterApp extends LitElement {
+    static get properties() {
+        return {
+            count: { type: Number }
+        };
+    }
 
-  constructor() {
-    super();
+    constructor() {
+        super();
+        this.count = 0; // Initialize count
+    }
 
-    this.count = 0;
-  }
+    static get styles() {
+        return css`
+            div {
+                text-align: center;
+                margin: 20px;
+            }
+            button {
+                margin: 5px;
+                padding: 10px;
+                font-size: 16px;
+            }
+        `;
+    }
 
-  render() {
-    return html`
-      <div>
-        Current count: [${this.count}]
-        <!-- Use @[eventname] syntax to declaratively register inline event handlers -->
-        <button @click=${() => (this.count += 1)}>+</button>
+    render() {
+        return html`
+            <div>
+                Current count: ${this.count}
+                <button @click=${this.increment}>+</button>
+                <button @click=${this.decrement}>-</button>
+            </div>
+        `;
+    }
 
-        <!--
-          You can also pass a function reference directly. Lit-html will automatically use the element
-          as the function scope ('this' will reference the element)
-        -->
-        <button @click=${this._onDecrement}>-</button>
-      </div>
-    `;
-  }
+    increment() {
+        this.count += 1; // Increment count
+    }
 
-  _onDecrement() {
-    this.count -= 1;
-  }
+    decrement() {
+        if (this.count > 0) {
+            this.count -= 1; // Decrement count, ensuring it doesn't go below 0
+        }
+    }
 }
 
-customElements.define("handle-events", HandleEvents);
+customElements.define("counter-app", CounterApp);

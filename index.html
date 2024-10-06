@@ -1,9 +1,33 @@
-<html>
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Counter App Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+  </style>
+  <script type="module" src="./src/counter-app.js"></script>
+</head>
 
 <body>
-	<handle-events></handle-events>
-</body>
-<script type="module" src="./src/counter-app.js"></script>
+  <h1>Counter App Demo</h1>
+  
+  <div id="demo">
+    <h2>Default Counter</h2>
+    <counter-app></counter-app>
 
+    <h2>Configured Counter</h2>
+    <counter-app counter="16" min="10" max="25"></counter-app>
+  </div>
+</body>
 
 </html>
