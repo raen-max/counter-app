@@ -6,7 +6,6 @@ class CounterApp extends LitElement {
             count: { type: Number },
             min: { type: Number },
             max: { type: Number },
-            id: { type: Number }
         };
     }
 
@@ -14,8 +13,21 @@ class CounterApp extends LitElement {
         super();
         this.count = 0; 
         this.min = 0; 
-        this.max = 25;
-        this.id = 0; // Placeholder for counter ID
+        this.max = 25; // Default max
+    }
+
+    static get observedAttributes() {
+        return ['counter', 'min', 'max'];
+    }
+
+    attributeChangedCallback(attr, oldVal, newVal) {
+        if (attr === 'counter') {
+            this.count = Number(newVal);
+        } else if (attr === 'min') {
+            this.min = Number(newVal);
+        } else if (attr === 'max') {
+            this.max = Number(newVal);
+        }
     }
 
     static get styles() {
@@ -42,7 +54,6 @@ class CounterApp extends LitElement {
                 <div>Current count: ${this.count}</div>
                 <button @click=${this.increment} ?disabled="${this.count >= this.max}">+</button>
                 <button @click=${this.decrement} ?disabled="${this.count <= this.min}">-</button>
-                <button @click=${this.deleteCounter}>Delete</button>
             </div>
         `;
     }
@@ -59,10 +70,6 @@ class CounterApp extends LitElement {
             this.count -= 1; // Decrement count
             this.requestUpdate(); // Request a re-render
         }
-    }
-
-    deleteCounter() {
-        this.dispatchEvent(new CustomEvent('delete', { detail: { id: this.id }, bubbles: true, composed: true }));
     }
 }
 

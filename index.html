@@ -1,59 +1,33 @@
-import { LitElement, html, css } from "lit";
-import "./counter-app.js"; // Adjust path as necessary
+<!doctype html>
+<html lang="en">
 
-class App extends LitElement {
-    static get properties() {
-        return {
-            counters: { type: Array }
-        };
-    }
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Counter App</title>
+    <script type="module" src="./src/counter-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
 
-    constructor() {
-        super();
-        this.counters = [
-            { id: 1, value: 0, min: 0, max: 25 },
-            { id: 2, value: 0, min: 0, max: 25 }
-        ];
-    }
+<body>
+    <h1>Counter App Demo</h1>
+    <!-- Default counter with no attributes -->
+    <counter-app></counter-app>
+    
+    <!-- Configured counter with attributes -->
+    <counter-app counter="16" min="10" max="25"></counter-app>
+</body>
 
-    static get styles() {
-        return css`
-            .main {
-                text-align: center;
-                padding: 20px;
-            }
-            .button {
-                margin: 10px;
-                padding: 10px 20px;
-            }
-        `;
-    }
-
-    render() {
-        return html`
-            <div class="main">
-                <h1>Counter App</h1>
-                <button @click=${this.resetAll} class="button">Reset All</button>
-                ${this.counters.map(counter => html`
-                    <counter-app 
-                        .count="${counter.value}" 
-                        .min="${counter.min}" 
-                        .max="${counter.max}" 
-                        .id="${counter.id}"
-                        @delete="${(e) => this.handleDelete(e.detail.id)}">
-                    </counter-app>
-                `)}
-            </div>
-        `;
-    }
-
-    resetAll() {
-        this.counters = this.counters.map(c => ({ ...c, value: c.min }));
-    }
-
-    handleDelete(counterId) {
-        this.counters = this.counters.filter(c => c.id !== counterId);
-    }
-}
-
-customElements.define("my-app", App);
+</html>
