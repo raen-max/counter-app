@@ -3,46 +3,91 @@ import { LitElement, html, css } from "lit";
 class CounterApp extends LitElement {
     static get properties() {
         return {
-            count: { type: Number }
+            count: { type: Number },
+            min: { type: Number },
+            max: { type: Number },
         };
     }
 
     constructor() {
         super();
-        this.count = 0; // Initialize count
+        this.count = 0; 
+        this.min = 0;
+        this.max = 200;
     }
 
+    static get observedAttributes(){
+      return ['counter', 'min', 'max'];
+    }
+
+    attributeChangedCallback(title, oldVal, newVal){
+      if (title=='counter'){
+        this.count = Number(newVal);
+      } else if (title=='min'){
+        this.min = Number(newVal);
+      }else if (title== 'max'){
+        this.max=Number(newVal);
+      }
+    }
     static get styles() {
-        return css`
-            div {
-                text-align: center;
-                margin: 20px;
-            }
-            button {
-                margin: 5px;
-                padding: 10px;
-                font-size: 16px;
-            }
-        `;
-    }
+      return css`
+          :host {
+              display: block;
+              margin: 20px auto;
+              max-width: 300px;
+              text-align: center;
+              border: 1px solid #ccc;
+              border-radius: 8px;
+              background-color: #f9f9f9;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+              padding: 20px;
+              font-family: Arial, sans-serif;
+          }
 
+          h2 {
+              margin: 0 0 15px;
+              color: #333;
+          }
+
+          button {
+              margin: 5px;
+              padding: 10px 15px;
+              font-size: 18px;
+              border: none;
+              border-radius: 5px;
+              background-color: #007bff;
+              color: white;
+              cursor: pointer;
+              transition: background-color 0.3s;
+          }
+
+          button:disabled {
+              background-color: #ccc;
+              cursor: not-allowed;
+          }
+
+          button:hover:not(:disabled) {
+              background-color: #0056b3;
+          }
+      `;
+  }
     render() {
         return html`
             <div>
-                Current count: ${this.count}
-                <button @click=${this.increment}>+</button>
-                <button @click=${this.decrement}>-</button>
+                <h2>Current count: ${this.count}</h2>
+                <button @click=${this.increment}>+</button> ?disabled="${this.count >= this.max}">+</button>
+                <button @click=${this.decrement}>-</button> ?disabled="${this.count <=this.min}">-</button>
             </div>
         `;
     }
 
     increment() {
-        this.count += 1; // Increment count
+        this.count += 1; 
     }
 
     decrement() {
         if (this.count > 0) {
-            this.count -= 1; // Decrement count, ensuring it doesn't go below 0
+            this.count -= 1; 
         }
     }
 }
