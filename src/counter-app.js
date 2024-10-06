@@ -4,14 +4,13 @@ class CounterApp extends LitElement {
     static get properties() {
         return {
             count: { type: Number },
-            configured: { type: Number },
         };
     }
 
     constructor() {
         super();
         this.count = 0; 
-        this.configured = 16; // Default value for configured
+       
     }
 
     static get styles() {
@@ -49,10 +48,7 @@ class CounterApp extends LitElement {
     render() {
         return html`
             <div>
-                <div>
-                   ${this.count}
-                    ${this.showConfigured ? html`<div>Configured value: ${this.configured}</div>` : ''}
-                
+                <div>${this.count} </div>
                 <button @click=${this.increment}>+</button>
                 <button @click=${this.decrement}>-</button>
                 </div>
@@ -61,12 +57,12 @@ class CounterApp extends LitElement {
     }
 
     increment() {
-        this.count += 1; // Increment count
+        this.count += 1; 
     }
 
     decrement() {
         if (this.count > 0) {
-            this.count -= 1; // Decrement count, ensuring it doesn't go below 0
+            this.count -= 1;
         }
     }
 }
