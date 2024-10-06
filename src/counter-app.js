@@ -9,12 +9,14 @@ export class counterApp extends DDDSuper(LitElement) {
 
   constructor() {
     super();
-    this.title = "";
+    this.count = 0;
+    this.title = " ";
   }
 
   static get properties() {
     return {
-      title: { type: String },
+      title: { type: String},
+      count: {type: Number},
     };
   }
 
@@ -39,25 +41,29 @@ export class counterApp extends DDDSuper(LitElement) {
     `];
   }
 
-  increment(e){
-    this.count++;
-  }
 
-  decrement(e){
-    this.count--;
-  }
+ increment(e){
+   this.count++;
+ }
 
-  
 
-  render() {
-    return html`
-<div class="wrapper">
-  <div>${this.count}</div>
-  <button @click="${this.decrement}">-</button><button @click="${this.increment}">+</button>
-  <div>${this.title}</div>
-  <slot></slot>
+ decrement(e){
+   this.count--;
+ }
+
+
+
+
+ render() {
+   return html`
+ <div class="wrapper">
+ <div>Current count: ${this.count}</div>
+ <button @click="${this.decrement}">-</button>
+ <button @click="${this.increment}">+</button>
+ <div>${this.title}</div>
+ <slot></slot>
 </div>`;
-  }
+ }
 
   /**
    * haxProperties integration via file reference
