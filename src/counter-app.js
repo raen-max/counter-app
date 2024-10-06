@@ -9,7 +9,25 @@ class CounterApp extends LitElement {
 
     constructor() {
         super();
-        this.count = 0; // Initialize count
+        this.count = 0; 
+    }
+
+    static get styles() {
+        return css`
+            div {
+                text-align: center;
+                margin: 20px;
+            }
+            button {
+                margin: 5px;
+                padding: 10px;
+                font-size: 16px;
+            }
+        `;
+    }
+    constructor() {
+        super();
+        this.configured = 16; 
     }
 
     static get styles() {
@@ -26,11 +44,23 @@ class CounterApp extends LitElement {
         `;
     }
 
+
     render() {
         return html`
             <div>
                 <div>
                 ${this.count}
+                </div>
+                <button @click=${this.increment}>+</button>
+                <button @click=${this.decrement}>-</button>
+            </div>
+        `;
+    }
+    render() {
+        return html`
+            <div>
+                <div>
+                ${this.configured}
                 </div>
                 <button @click=${this.increment}>+</button>
                 <button @click=${this.decrement}>-</button>
