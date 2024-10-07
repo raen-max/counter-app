@@ -14,20 +14,7 @@ class CounterApp extends LitElement {
         this.count = 0; 
         this.min = 0; 
         this.max = 25; 
-    }
-
-    static get observedAttributes() {
-        return ['counter', 'min', 'max'];
-    }
-
-    attributeChangedCallback(attr, oldVal, newVal) {
-        if (attr === 'counter') {
-            this.count = Number(newVal);
-        } else if (attr === 'min') {
-            this.min = Number(newVal);
-        } else if (attr === 'max') {
-            this.max = Number(newVal);
-        }
+        this.confettiInterval = null; // To hold the interval reference
     }
 
     static get styles() {
@@ -52,18 +39,17 @@ class CounterApp extends LitElement {
             .button-container {
                 display: flex;
                 justify-content: center;
-                gap: 16px; 
+                gap: 8px; 
             }
             button {
-                padding: 16px 24px; 
-                font-size: 20px; 
+                padding: 12px 16px;
+                font-size: 18px;
                 border: none;
-                border-radius: 8px; 
+                border-radius: 5px;
                 background-color: pink;
                 color: white;
                 cursor: pointer;
                 transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-                outline: none;
             }
             button:disabled {
                 background-color: #ccc;
@@ -78,14 +64,36 @@ class CounterApp extends LitElement {
             button:active:not(:disabled) {
                 transform: translateY(1px);
             }
+            #confetti-container {
+                position: relative;
+                overflow: hidden;
+                height: 200px; /* Adjust as needed */
+            }
+            .confetti {
+                position: absolute;
+                top: 0;
+                font-size: 24px; /* Adjust size of confetti */
+                animation: fall 5s forwards;
+            }
+            @keyframes fall {
+                to {
+                    transform: translateY(100vh);
+                    opacity: 0;
+                }
+            }
         `;
+    }
+
+    updated(changedProperties) {
+        if (changedProperties.has('count') && this.count === 21) {
+            this.makeItRain();
+        }
     }
 
     render() {
         const colorStyle = this._getColorStyle();
         return html`
-            <confetti-container id="confetti"></confetti-container>
-            <div>
+            <div id="confetti-container">
                 <div class="counter" style="${colorStyle}">
                     ${this.count}
                 </div>
@@ -100,12 +108,14 @@ class CounterApp extends LitElement {
     increment() {
         if (this.count < this.max) {
             this.count += 1; 
+            this.requestUpdate(); 
         }
     }
 
     decrement() {
         if (this.count > this.min) {
             this.count -= 1;
+            this.requestUpdate(); 
         }
     }
 
@@ -120,20 +130,25 @@ class CounterApp extends LitElement {
         return ''; 
     }
 
-    updated(changedProperties) {
-        if (changedProperties.has('count') && this.count === 21) {
-            this.makeItRain(); // Trigger confetti when count is 21
-        }
-    }
-
     makeItRain() {
-        import("@haxtheweb/multiple-choice/lib/confetti-container.js").then(() => {
+        const showConfetti = () => {
+            const confetti = document.createElement('div');
+            confetti.textContent = '🎉';
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * innerWidth + 'px';
+            this.shadowRoot.querySelector('#confetti-container').appendChild(confetti);
+
             setTimeout(() => {
-                this.shadowRoot.querySelector("#confetti").setAttribute("popped", "");
-            }, 0);
-        }).catch(error => {
-            console.error("Failed to load confetti module:", error);
-        });
+                confetti.remove();
+            }, 5000);
+        };
+
+        this.confettiInterval = setInterval(showConfetti, 400);
+        
+        // Clear the interval after some time to stop confetti
+        setTimeout(() => {
+            clearInterval(this.confettiInterval);
+        }, 5000); // Adjust time as needed
     }
 }
 
