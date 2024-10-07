@@ -13,7 +13,7 @@ class CounterApp extends LitElement {
         super();
         this.count = 0; 
         this.min = 0; 
-        this.max = 25; // Default max
+        this.max = 25; 
     }
 
     static get observedAttributes() {
@@ -41,24 +41,25 @@ class CounterApp extends LitElement {
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
                 background-color: #ffffff;
                 padding: 20px;
+                text-align: center; /* Center align text */
             }
             .counter {
-                font-size: 48px; /* Larger font size */
+                font-size: 64px; /* Increased font size */
                 color: #333;
                 margin-bottom: 16px;
-                transition: color 0.3s; /* Smooth color transition */
+                transition: color 0.3s; 
             }
             .button-container {
                 display: flex;
                 justify-content: center;
-                gap: 8px; /* Space between buttons */
+                gap: 16px; /* Increased spacing between buttons */
             }
             button {
-                padding: 12px 16px;
-                font-size: 18px;
+                padding: 16px 24px; /* Larger button size */
+                font-size: 20px; /* Increased font size for buttons */
                 border: none;
-                border-radius: 5px;
-                background-color: #007bff;
+                border-radius: 8px; /* More rounded corners */
+                background-color: pink;
                 color: white;
                 cursor: pointer;
                 transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
@@ -69,7 +70,7 @@ class CounterApp extends LitElement {
             }
             button:hover:not(:disabled),
             button:focus:not(:disabled) {
-                background-color: #0056b3;
+                background-color: gold;
                 transform: translateY(-2px);
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             }
@@ -97,45 +98,41 @@ class CounterApp extends LitElement {
 
     increment() {
         if (this.count < this.max) {
-            this.count += 1; // Increment count
-            this.requestUpdate(); // Request a re-render
+            this.count += 1; 
+            this.requestUpdate(); 
         }
     }
 
     decrement() {
         if (this.count > this.min) {
-            this.count -= 1; // Decrement count
-            this.requestUpdate(); // Request a re-render
+            this.count -= 1;
+            this.requestUpdate(); 
         }
     }
 
     _getColorStyle() {
         if (this.count >= this.max || this.count <= this.min) {
-            return 'color: red;'; // Color for min/max
+            return 'color: red;'; 
         } else if (this.count === 18) {
-            return 'color: orange;'; // Color at 18
+            return 'color: orange;'; 
         } else if (this.count === 21) {
-            return 'color: green;'; // Color at 21
+            return 'color: green;'; 
         }
-        return ''; // Default color
+        return ''; 
     }
 
     updated(changedProperties) {
-        if (changedProperties.has('count')) {
-            if (this.count === 21) {
-                this.makeItRain();
-            }
+        if (changedProperties.has('count') && this.count === 21) {
+            this.makeItRain(); // Trigger confetti when count is 21
         }
     }
 
     makeItRain() {
-        import("@haxtheweb/multiple-choice/lib/confetti-container.js").then(
-            (module) => {
-                setTimeout(() => {
-                    this.shadowRoot.querySelector("#confetti").setAttribute("popped", "");
-                }, 0);
-            }
-        );
+        import("@haxtheweb/multiple-choice/lib/confetti-container.js").then(() => {
+            setTimeout(() => {
+                this.shadowRoot.querySelector("#confetti").setAttribute("popped", "");
+            }, 0);
+        });
     }
 }
 
