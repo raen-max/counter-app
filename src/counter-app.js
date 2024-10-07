@@ -115,14 +115,14 @@ class CounterApp extends LitElement {
             const confetti = document.createElement('div');
             confetti.textContent = '🎉';
             confetti.classList.add('confetti');
-            confetti.style.left = Math.random() * 100 + 'vw'; // Random position
+            confetti.style.left = Math.random() * 100 + 'vw';
             confettiContainer.appendChild(confetti);
             setTimeout(() => confetti.remove(), 3000);
         };
 
         const interval = setInterval(showConfetti, 400);
 
-        // Stop confetti after a set time
+        
         setTimeout(() => clearInterval(interval), 5000);
     }
 }
