@@ -44,7 +44,7 @@ class CounterApp extends LitElement {
                 text-align: center; /* Center align text */
             }
             .counter {
-                font-size: 64px; /* Increased font size */
+                font-size: 100px; /* Increased font size */
                 color: #333;
                 margin-bottom: 16px;
                 transition: color 0.3s; 
@@ -52,11 +52,11 @@ class CounterApp extends LitElement {
             .button-container {
                 display: flex;
                 justify-content: center;
-                gap: 16px; /* Increased spacing between buttons */
+                gap: 50px; /* Increased spacing between buttons */
             }
             button {
-                padding: 16px 24px; /* Larger button size */
-                font-size: 20px; /* Increased font size for buttons */
+                padding: 48px 90px; /* Larger button size */
+                font-size: 60px; /* Increased font size for buttons */
                 border: none;
                 border-radius: 8px; /* More rounded corners */
                 background-color: pink;
