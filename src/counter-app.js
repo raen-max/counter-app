@@ -13,7 +13,7 @@ class CounterApp extends LitElement {
         super();
         this.count = 0; 
         this.min = 0; 
-        this.max = 25; // Default max
+        this.max = 25; 
     }
 
     static get observedAttributes() {
@@ -39,7 +39,7 @@ class CounterApp extends LitElement {
                 border-radius: 10px;
                 overflow: hidden;
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-                background-color: #ffffff;
+                background-color: red
             }
             div {
                 text-align: center;
@@ -48,7 +48,7 @@ class CounterApp extends LitElement {
             h2 {
                 margin: 0 0 15px;
                 font-size: 24px;
-                color: #333;
+                color: greenyellow;
             }
             button {
                 margin: 5px;
@@ -62,7 +62,7 @@ class CounterApp extends LitElement {
                 transition: background-color 0.3s, transform 0.2s;
             }
             button:disabled {
-                background-color: #ccc;
+                background-color: goldenrod;
                 cursor: not-allowed;
             }
             button:hover:not(:disabled) {
