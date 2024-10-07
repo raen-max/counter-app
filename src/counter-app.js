@@ -124,6 +124,20 @@ class CounterApp extends LitElement {
 
         // Stop confetti after a set time
         setTimeout(() => clearInterval(interval), 5000);
+        static get observedAttributes() {
+            return ['counter', 'min', 'max'];
+        }
+    
+        attributeChangedCallback(name, oldValue, newValue) {
+            if (name === 'counter') {
+                this.count = parseInt(newValue, 10) || 0;
+            }
+            if (name === 'min') {
+                this.min = parseInt(newValue, 10) || 0;
+            }
+            if (name === 'max') {
+                this.max = parseInt(newValue, 10) || 25;
+            }
     }
 }
 
