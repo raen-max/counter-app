@@ -13,7 +13,7 @@ class CounterApp extends LitElement {
         super();
         this.count = 0; 
         this.min = 0; 
-        this.max = 25; 
+        this.max = 25; // Default max
     }
 
     static get observedAttributes() {
@@ -43,22 +43,22 @@ class CounterApp extends LitElement {
                 padding: 20px;
             }
             .counter {
-                font-size: 48px; 
+                font-size: 48px; /* Larger font size */
                 color: #333;
                 margin-bottom: 16px;
-                transition: color 0.3s; 
+                transition: color 0.3s; /* Smooth color transition */
             }
             .button-container {
                 display: flex;
                 justify-content: center;
-                gap: 8px; 
+                gap: 8px; /* Space between buttons */
             }
             button {
                 padding: 12px 16px;
                 font-size: 18px;
                 border: none;
                 border-radius: 5px;
-                background-color: pink;
+                background-color: #007bff;
                 color: white;
                 cursor: pointer;
                 transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
@@ -69,7 +69,7 @@ class CounterApp extends LitElement {
             }
             button:hover:not(:disabled),
             button:focus:not(:disabled) {
-                background-color: gold;
+                background-color: #0056b3;
                 transform: translateY(-2px);
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             }
@@ -82,6 +82,7 @@ class CounterApp extends LitElement {
     render() {
         const colorStyle = this._getColorStyle();
         return html`
+            <confetti-container id="confetti"></confetti-container>
             <div>
                 <div class="counter" style="${colorStyle}">
                     ${this.count}
@@ -96,27 +97,45 @@ class CounterApp extends LitElement {
 
     increment() {
         if (this.count < this.max) {
-            this.count += 1; 
-            this.requestUpdate(); 
+            this.count += 1; // Increment count
+            this.requestUpdate(); // Request a re-render
         }
     }
 
     decrement() {
         if (this.count > this.min) {
-            this.count -= 1;
-            this.requestUpdate(); 
+            this.count -= 1; // Decrement count
+            this.requestUpdate(); // Request a re-render
         }
     }
 
     _getColorStyle() {
         if (this.count >= this.max || this.count <= this.min) {
-            return 'color: red;'; 
+            return 'color: red;'; // Color for min/max
         } else if (this.count === 18) {
-            return 'color: orange;'; 
+            return 'color: orange;'; // Color at 18
         } else if (this.count === 21) {
-            return 'color: green;'; 
+            return 'color: green;'; // Color at 21
         }
-        return ''; 
+        return ''; // Default color
+    }
+
+    updated(changedProperties) {
+        if (changedProperties.has('count')) {
+            if (this.count === 21) {
+                this.makeItRain();
+            }
+        }
+    }
+
+    makeItRain() {
+        import("@haxtheweb/multiple-choice/lib/confetti-container.js").then(
+            (module) => {
+                setTimeout(() => {
+                    this.shadowRoot.querySelector("#confetti").setAttribute("popped", "");
+                }, 0);
+            }
+        );
     }
 }
 
