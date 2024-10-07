@@ -113,6 +113,7 @@ class CounterApp extends LitElement {
         
         const showConfetti = () => {
             const confetti = document.createElement('div');
+            confetti.textContent = '🎉';
             confetti.classList.add('confetti');
             confetti.style.left = Math.random() * 100 + 'vw'; // Random position
             confettiContainer.appendChild(confetti);
