@@ -3,17 +3,17 @@ import { LitElement, html, css } from "lit";
 class CounterApp extends LitElement {
     static get properties() {
         return {
-            count: { type: Number, reflect: true },
-            min: { type: Number, reflect: true },
-            max: { type: Number, reflect: true },
+            count: { type: Number },
+            min: { type: Number },
+            max: { type: Number },
         };
     }
 
     constructor() {
         super();
-        this.count = 0;
-        this.min = 0;
-        this.max = 25;
+        this.count = 0; 
+        this.min = 0; 
+        this.max = 25; 
     }
 
     static get styles() {
@@ -110,7 +110,7 @@ class CounterApp extends LitElement {
 
     makeItRain() {
         const confettiContainer = this.shadowRoot.querySelector('#confetti-container');
-        
+
         const showConfetti = () => {
             const confetti = document.createElement('div');
             confetti.textContent = '🎉';
@@ -121,23 +121,9 @@ class CounterApp extends LitElement {
         };
 
         const interval = setInterval(showConfetti, 400);
+
+        // Stop confetti after a set time
         setTimeout(() => clearInterval(interval), 5000);
-    }
-
-    static get observedAttributes() {
-        return ['counter', 'min', 'max'];
-    }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (name === 'counter') {
-            this.count = parseInt(newValue, 10) || 0;
-        }
-        if (name === 'min') {
-            this.min = parseInt(newValue, 10) || 0;
-        }
-        if (name === 'max') {
-            this.max = parseInt(newValue, 10) || 25;
-        }
     }
 }
 
