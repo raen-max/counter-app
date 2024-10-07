@@ -63,7 +63,7 @@ class CounterApp extends LitElement {
                 color: white;
                 cursor: pointer;
                 transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-                outline: none; /* Remove default focus outline */
+                outline: none;
             }
             button:disabled {
                 background-color: #ccc;
@@ -100,14 +100,12 @@ class CounterApp extends LitElement {
     increment() {
         if (this.count < this.max) {
             this.count += 1; 
-            this.requestUpdate(); 
         }
     }
 
     decrement() {
         if (this.count > this.min) {
             this.count -= 1;
-            this.requestUpdate(); 
         }
     }
 
@@ -130,12 +128,9 @@ class CounterApp extends LitElement {
 
     makeItRain() {
         import("@haxtheweb/multiple-choice/lib/confetti-container.js").then(() => {
-            const confettiContainer = this.shadowRoot.querySelector("#confetti");
-            if (confettiContainer) {
-                setTimeout(() => {
-                    confettiContainer.setAttribute("popped", "");
-                }, 0);
-            }
+            setTimeout(() => {
+                this.shadowRoot.querySelector("#confetti").setAttribute("popped", "");
+            }, 0);
         }).catch(error => {
             console.error("Failed to load confetti module:", error);
         });
