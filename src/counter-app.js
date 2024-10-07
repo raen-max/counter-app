@@ -41,10 +41,10 @@ class CounterApp extends LitElement {
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
                 background-color: #ffffff;
                 padding: 20px;
-                text-align: center; /* Center align text */
+                text-align: center;
             }
             .counter {
-                font-size: 100px; /* Increased font size */
+                font-size: 64px; 
                 color: #333;
                 margin-bottom: 16px;
                 transition: color 0.3s; 
@@ -52,17 +52,18 @@ class CounterApp extends LitElement {
             .button-container {
                 display: flex;
                 justify-content: center;
-                gap: 50px; /* Increased spacing between buttons */
+                gap: 16px; 
             }
             button {
-                padding: 48px 90px; /* Larger button size */
-                font-size: 60px; /* Increased font size for buttons */
+                padding: 16px 24px; 
+                font-size: 20px; 
                 border: none;
-                border-radius: 8px; /* More rounded corners */
+                border-radius: 8px; 
                 background-color: pink;
                 color: white;
                 cursor: pointer;
                 transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+                outline: none; /* Remove default focus outline */
             }
             button:disabled {
                 background-color: #ccc;
@@ -129,9 +130,14 @@ class CounterApp extends LitElement {
 
     makeItRain() {
         import("@haxtheweb/multiple-choice/lib/confetti-container.js").then(() => {
-            setTimeout(() => {
-                this.shadowRoot.querySelector("#confetti").setAttribute("popped", "");
-            }, 0);
+            const confettiContainer = this.shadowRoot.querySelector("#confetti");
+            if (confettiContainer) {
+                setTimeout(() => {
+                    confettiContainer.setAttribute("popped", "");
+                }, 0);
+            }
+        }).catch(error => {
+            console.error("Failed to load confetti module:", error);
         });
     }
 }
