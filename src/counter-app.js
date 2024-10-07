@@ -39,35 +39,39 @@ class CounterApp extends LitElement {
                 border-radius: 10px;
                 overflow: hidden;
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-                background-color: red
-            }
-            div {
-                text-align: center;
+                background-color: #ffffff;
                 padding: 20px;
             }
-            h2 {
-                margin: 0 0 15px;
-                font-size: 24px;
-                color: greenyellow;
+            .counter {
+                font-size: 48px; 
+                color: #333;
+                margin-bottom: 16px;
+                transition: color 0.3s; 
+            }
+            .button-container {
+                display: flex;
+                justify-content: center;
+                gap: 8px; 
             }
             button {
-                margin: 5px;
-                padding: 10px 15px;
+                padding: 12px 16px;
                 font-size: 18px;
                 border: none;
                 border-radius: 5px;
-                background-color: #007bff;
+                background-color: pink;
                 color: white;
                 cursor: pointer;
-                transition: background-color 0.3s, transform 0.2s;
+                transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
             }
             button:disabled {
-                background-color: goldenrod;
+                background-color: #ccc;
                 cursor: not-allowed;
             }
-            button:hover:not(:disabled) {
-                background-color: #0056b3;
+            button:hover:not(:disabled),
+            button:focus:not(:disabled) {
+                background-color: gold;
                 transform: translateY(-2px);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             }
             button:active:not(:disabled) {
                 transform: translateY(1px);
@@ -76,27 +80,43 @@ class CounterApp extends LitElement {
     }
 
     render() {
+        const colorStyle = this._getColorStyle();
         return html`
             <div>
-                <h2>Current Count: ${this.count}</h2>
-                <button @click=${this.increment} ?disabled="${this.count >= this.max}">+</button>
-                <button @click=${this.decrement} ?disabled="${this.count <= this.min}">-</button>
+                <div class="counter" style="${colorStyle}">
+                    ${this.count}
+                </div>
+                <div class="button-container">
+                    <button @click=${this.increment} ?disabled="${this.count >= this.max}">+</button>
+                    <button @click=${this.decrement} ?disabled="${this.count <= this.min}">-</button>
+                </div>
             </div>
         `;
     }
 
     increment() {
         if (this.count < this.max) {
-            this.count += 1; // Increment count
-            this.requestUpdate(); // Request a re-render
+            this.count += 1; 
+            this.requestUpdate(); 
         }
     }
 
     decrement() {
         if (this.count > this.min) {
-            this.count -= 1; // Decrement count
-            this.requestUpdate(); // Request a re-render
+            this.count -= 1;
+            this.requestUpdate(); 
         }
+    }
+
+    _getColorStyle() {
+        if (this.count >= this.max || this.count <= this.min) {
+            return 'color: red;'; 
+        } else if (this.count === 18) {
+            return 'color: orange;'; 
+        } else if (this.count === 21) {
+            return 'color: green;'; 
+        }
+        return ''; 
     }
 }
 
